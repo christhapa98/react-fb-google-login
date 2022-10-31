@@ -1,25 +1,51 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import FacebookLogin from 'react-facebook-login';
+import GoogleLogin from 'react-google-login';
+import { useEffect } from 'react';
+import { gapi } from 'gapi-script';
 
 function App() {
+  const facebookAppId: string = "671512814236879";
+  const googleClientId: string = "679506518416-hiui3bm045d76bsk0gqbfkeidv4q59q0.apps.googleusercontent.com";
+
+  const onFacebookLogin = (response: any) => {
+    console.log(response);
+  }
+
+  const onGoogleLogin = (response: any) => {
+    console.log(response);
+  }
+
+  const onGoogleLoginFailed = (response: any) => {
+    console.log(response)
+  }
+
+  useEffect(() => {
+    gapi.load("client:auth2", () => {
+      gapi.auth2.init({ clientId: googleClientId })
+    })
+    return () => {
+    }
+  }, [])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <FacebookLogin
+        appId={facebookAppId}
+        autoLoad={false}
+        fields="name,email,picture"
+        scope="public_profile,user_friends"
+        callback={onFacebookLogin}
+        icon="fa-facebook" />
+
+      <GoogleLogin
+        clientId={googleClientId}
+        buttonText="Login"
+        onSuccess={onGoogleLogin}
+        onFailure={onGoogleLoginFailed}
+        cookiePolicy={'single_host_origin'}
+      />
+    </>
   );
 }
 
