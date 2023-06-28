@@ -5,7 +5,9 @@ import { useEffect } from 'react';
 import { gapi } from 'gapi-script';
 
 function App() {
-  const facebookAppId: string = "671512814236879";
+  const facebookAppId: string = "1326133208218519";
+  // const facebookAppId: string = "1089202245077219";
+  // 1089202245077219
   const googleClientId: string = "679506518416-hiui3bm045d76bsk0gqbfkeidv4q59q0.apps.googleusercontent.com";
 
   const onFacebookLogin = (response: any) => {
